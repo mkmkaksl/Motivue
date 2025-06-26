@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "456271136968",
+    "project_id": "daily-messages-db6fb",
+    "storage_bucket": "daily-messages-db6fb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:456271136968:android:49735a6db3dbd8ec79bdfd",
+        "android_client_info": {
+          "package_name": "com.example.motivation_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATLs95mXAuGoNfwYxrBCai-WZz1KmYwUY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
