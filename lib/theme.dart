@@ -5,6 +5,30 @@ var screenW = LayoutConfig.width;
 var screenH = LayoutConfig.height;
 const padding = 10.0;
 
+Map<int, String> months = {
+  1: "January",
+  2: "February",
+  3: "March",
+  4: "April",
+  5: "May",
+  6: "June",
+  7: "July",
+  8: "August",
+  9: "September",
+  10: "October",
+  11: "November",
+  12: "December",
+};
+Map<int, String> weekday = {
+  1: "Monday",
+  2: "Tuesday",
+  3: "Wednesday",
+  4: "Thursday",
+  5: "Friday",
+  6: "Saturday",
+  7: "Sunday",
+};
+
 class AppTheme {
   static const darkBlue = Color(0xFF1A1A2E);
   static const primaryBlue = Color(0xFF16213E);

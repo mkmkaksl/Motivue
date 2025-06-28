@@ -4,7 +4,16 @@ import 'package:Motivue/library.dart';
 class QuoteBlock extends StatefulWidget {
   final String quote;
   final String author;
-  const QuoteBlock({super.key, required this.quote, required this.author});
+
+  final bool delete;
+  final String date;
+  const QuoteBlock({
+    super.key,
+    required this.quote,
+    required this.author,
+    this.delete = false,
+    this.date = "",
+  });
 
   @override
   State<QuoteBlock> createState() => _QuoteBlockState();
@@ -25,25 +34,41 @@ class _QuoteBlockState extends State<QuoteBlock> {
         borderRadius: BorderRadius.circular(20),
         gradient: LinearGradient(colors: AppTheme.backgroundColors),
       ),
-      padding: EdgeInsets.symmetric(vertical: 50, horizontal: 20),
-      child: Column(
+      padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+      child: Stack(
         children: [
-          Text(
-            widget.quote,
-            style: TextStyle(
-              color: AppTheme.mainText,
-              fontSize: 15,
-              fontStyle: FontStyle.italic,
-              shadows: [Shadow(color: AppTheme.mainText, blurRadius: 10)],
+          Column(
+            children: [
+              Text(
+                widget.quote,
+                style: TextStyle(
+                  color: AppTheme.mainText,
+                  fontSize: 15,
+                  fontStyle: FontStyle.italic,
+                  shadows: [Shadow(color: AppTheme.mainText, blurRadius: 10)],
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: padding),
+              GradientText(
+                gradient: AppTheme.textGradient,
+                text: "- ${widget.author}",
+                style: TextStyle(fontSize: 20),
+              ),
+            ],
+          ),
+          if (widget.delete)
+            Positioned(
+              bottom: 0,
+              right: 0,
+              child: GestureDetector(
+                onTapUp: (TapUpDetails details) async {
+                  await quoteBox.delete("key_${widget.date}");
+                  setState(() {});
+                },
+                child: Icon(Icons.delete, color: Colors.red),
+              ),
             ),
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(height: padding),
-          GradientText(
-            gradient: AppTheme.textGradient,
-            text: "- ${widget.author}",
-            style: TextStyle(fontSize: 20),
-          ),
         ],
       ),
     );
