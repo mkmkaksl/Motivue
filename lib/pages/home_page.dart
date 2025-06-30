@@ -11,7 +11,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  static const List<Widget> pages = [DailyQuotePage(), SavedQuotesPage()];
+  static const List<Widget> pages = [
+    DailyQuotePage(),
+    SavedQuotesPage(),
+    OldMessages(),
+  ];
   int selectedIndex = 0;
 
   void _onItemTapped(int index) {
@@ -31,6 +35,10 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.format_quote),
             label: "Saved Quotes",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.folder_outlined),
+            label: "Old Messages",
           ),
         ],
         currentIndex: selectedIndex,
@@ -56,4 +64,78 @@ Future<Map?> getTodayMessage() async {
     "quote": "No quote for today yet :(",
     "author": "Coming soon",
   };
+}
+
+Future<List<Map?>> getOldMessages() async {
+  DateTime now = DateTime.now().subtract(Duration(days: 1));
+
+  String year = now.year.toString();
+  String month = now.month.toString();
+  String day = now.day.toString();
+
+  if (month.length < 2) month = "0$month";
+  if (day.length < 2) day = "0$day";
+
+  String today = "$year-$month-$day";
+
+  // final year = today.year;
+  // final month = today.month;
+  // final day = today.day;
+
+  List<Map?> data = [];
+
+  var snapshot = (await FirebaseFirestore.instance
+      .collection("daily_messages")
+      .doc(today)
+      .get());
+
+  while (snapshot.exists) {
+    data.add(snapshot.data());
+
+    now = now.subtract(Duration(days: 1));
+
+    year = now.year.toString();
+    month = now.month.toString();
+    day = now.day.toString();
+
+    if (month.length < 2) month = "0$month";
+    if (day.length < 2) day = "0$day";
+
+    today = "$year-$month-$day";
+
+    snapshot = (await FirebaseFirestore.instance
+        .collection("daily_messages")
+        .doc(today)
+        .get());
+  }
+
+  return data;
+}
+
+ScaffoldFeatureController showSnackBar(
+  BuildContext context,
+  Animation<double> opacityAnimation,
+  String message,
+  Color bgColor,
+  Color txtColor,
+) {
+  return ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: FadeTransition(
+        opacity: opacityAnimation,
+        child: Center(
+          child: Text(
+            message,
+            style: TextStyle(
+              color: txtColor,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ),
+      backgroundColor: bgColor.withAlpha(200),
+      duration: const Duration(seconds: 3),
+    ),
+  );
 }

@@ -53,6 +53,7 @@ class _SavedQuotesPageState extends State<SavedQuotesPage> {
                               delete: true,
                             );
                           }).toList()),
+                          SizedBox(height: 30),
                         ],
                       );
                     },
