@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:Motivue/library.dart';
 
 class ErrorScreen extends StatelessWidget {
   final String message;
@@ -7,7 +6,11 @@ class ErrorScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
+      color: Colors.red.withAlpha(50),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.red.withAlpha(100), width: 1),
+      ),
       width: 200,
       height: 300,
       child: Center(

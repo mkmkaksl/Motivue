@@ -89,7 +89,7 @@ class _QuoteBlockState extends State<QuoteBlock>
                   GradientText(
                     gradient: AppTheme.textGradient,
                     text: "- ${widget.author}",
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: authorFS),
                   ),
                 ],
               ),

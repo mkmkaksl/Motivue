@@ -4,6 +4,9 @@ import 'package:Motivue/library.dart';
 var screenW = LayoutConfig.width;
 var screenH = LayoutConfig.height;
 const padding = 10.0;
+double authorFS = 18;
+// Color bgCircleColor = Colors.white;
+Color bgCircleColor = AppTheme.authorText;
 
 Map<int, String> months = {
   1: "January",

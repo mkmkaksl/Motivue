@@ -13,53 +13,51 @@ class _SavedQuotesPageState extends State<SavedQuotesPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: AppTheme.backgroundGradient,
       padding: EdgeInsets.all(padding),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: SingleChildScrollView(
-          child: Center(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                //Header
-                SizedBox(height: 100),
+      child: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              //Header
+              SizedBox(height: 100),
 
-                if (quoteBox.values.isEmpty)
-                  Text(
-                    "No Quotes Saved...",
-                    style: TextStyle(color: Colors.white, fontSize: 30),
-                  )
-                else if (quoteBox.values.isNotEmpty)
-                  ValueListenableBuilder(
-                    valueListenable: quoteBox.listenable(),
-                    builder: (BuildContext context, Box box, _) {
-                      return Column(
-                        children: [
-                          Text(
-                            "Saved Quotes:",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                            ),
+              if (quoteBox.values.isEmpty)
+                Text(
+                  "No Quotes Saved...",
+                  style: TextStyle(color: Colors.white, fontSize: 30),
+                )
+              else if (quoteBox.values.isNotEmpty)
+                ValueListenableBuilder(
+                  valueListenable: quoteBox.listenable(),
+                  builder: (BuildContext context, Box box, _) {
+                    return Column(
+                      children: [
+                        GradientText(
+                          gradient: LinearGradient(
+                            colors: [AppTheme.authorText, Colors.white],
                           ),
-                          SizedBox(height: padding),
-                          ...(quoteBox.values.map((dynamic quote) {
-                            return QuoteBlock(
-                              quote: quote.quote,
-                              author: quote.author,
-                              date: quote.date,
-                              delete: true,
-                            );
-                          }).toList()),
-                          SizedBox(height: 30),
-                        ],
-                      );
-                    },
-                  ),
-              ],
-            ),
+                          text: "Saved Quotes:",
+                          style: TextStyle(
+                            fontSize: 35,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: padding),
+                        ...(quoteBox.values.map((dynamic quote) {
+                          return QuoteBlock(
+                            quote: quote.quote,
+                            author: quote.author,
+                            date: quote.date,
+                            delete: true,
+                          );
+                        }).toList()),
+                        SizedBox(height: 30),
+                      ],
+                    );
+                  },
+                ),
+            ],
           ),
         ),
       ),

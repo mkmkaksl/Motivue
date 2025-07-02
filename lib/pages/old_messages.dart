@@ -45,25 +45,28 @@ class _OldMessagesState extends State<OldMessages> {
             ),
           );
 
+          messages.add(
+            Container(
+              width: screenW * (4 / 5),
+              height: 1,
+              margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+              decoration: BoxDecoration(color: Colors.white.withAlpha(50)),
+            ),
+          );
+
           now = now.subtract(Duration(days: 1));
           date = "${weekday[now.weekday]}, ${months[now.month]} ${now.day}";
         }
-        return Container(
-          decoration: AppTheme.backgroundGradient,
-          child: Scaffold(
-            backgroundColor: Colors.transparent,
-            body: SingleChildScrollView(
-              child: Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    //Header
-                    SizedBox(height: 100),
-                    ...(messages),
-                    SizedBox(height: 30),
-                  ],
-                ),
-              ),
+        return SingleChildScrollView(
+          child: Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                //Header
+                SizedBox(height: 100),
+                ...(messages),
+                SizedBox(height: 30),
+              ],
             ),
           ),
         );

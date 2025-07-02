@@ -11,6 +11,10 @@ export './widget/quote_block.dart';
 export './widget/message_block.dart';
 export './widget/daily_display_widget.dart';
 export './widget/error_screen.dart';
+export './widget/falling_circle.dart';
+export './widget/background_circles_effect.dart';
+
+export './painters/circle.dart';
 
 export 'theme.dart';
 export 'layout_config.dart';

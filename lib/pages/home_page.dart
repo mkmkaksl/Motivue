@@ -27,23 +27,32 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     LayoutConfig.init(context);
-    return Scaffold(
-      body: pages.elementAt(selectedIndex),
-      bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.format_quote),
-            label: "Saved Quotes",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.folder_outlined),
-            label: "Old Messages",
+    return Container(
+      decoration: AppTheme.backgroundGradient,
+      child: Stack(
+        children: [
+          BackgroundCirclesEffect(),
+          Scaffold(
+            backgroundColor: Colors.transparent,
+            body: pages.elementAt(selectedIndex),
+            bottomNavigationBar: BottomNavigationBar(
+              items: <BottomNavigationBarItem>[
+                BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.format_quote),
+                  label: "Saved Quotes",
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.folder_outlined),
+                  label: "Old Messages",
+                ),
+              ],
+              currentIndex: selectedIndex,
+              backgroundColor: AppTheme.authorText,
+              onTap: _onItemTapped,
+            ),
           ),
         ],
-        currentIndex: selectedIndex,
-        backgroundColor: AppTheme.authorText,
-        onTap: _onItemTapped,
       ),
     );
   }
@@ -78,10 +87,6 @@ Future<List<Map?>> getOldMessages() async {
 
   String today = "$year-$month-$day";
 
-  // final year = today.year;
-  // final month = today.month;
-  // final day = today.day;
-
   List<Map?> data = [];
 
   var snapshot = (await FirebaseFirestore.instance
@@ -89,7 +94,8 @@ Future<List<Map?>> getOldMessages() async {
       .doc(today)
       .get());
 
-  while (snapshot.exists) {
+  int c = 0;
+  while (snapshot.exists && c < 10) {
     data.add(snapshot.data());
 
     now = now.subtract(Duration(days: 1));
@@ -102,6 +108,9 @@ Future<List<Map?>> getOldMessages() async {
     if (day.length < 2) day = "0$day";
 
     today = "$year-$month-$day";
+
+    c++;
+    if (c >= 30) break;
 
     snapshot = (await FirebaseFirestore.instance
         .collection("daily_messages")
